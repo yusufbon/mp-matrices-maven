@@ -1,12 +1,13 @@
 package edu.grinnell.csc207.util;
 
-import java.io.PrintWriter;
-
 /**
  * An implementation of two-dimensional matrices.
  *
  * @author Your Name Here
  * @author Samuel A. Rebelsky
+ *
+ * @param <T>
+ *   The type of values stored in the matrix.
  */
 public class MatrixV0<T> implements Matrix<T> {
   // +--------+------------------------------------------------------
@@ -146,7 +147,7 @@ public class MatrixV0<T> implements Matrix<T> {
    * @throws IndexOutOfBoundsException
    *   If the column is negative or greater than the width.
    */
-  public void insertCol(int row) {
+  public void insertCol(int col) {
     // STUB
   } // insertCol(int)
 
@@ -163,7 +164,7 @@ public class MatrixV0<T> implements Matrix<T> {
    * @throws ArraySizeException
    *   If the size of vals is not the same as the height of the matrix.
    */
-  public void insertCol(int row, T[] vals) throws ArraySizeException {
+  public void insertCol(int col, T[] vals) throws ArraySizeException {
     // STUB
   } // insertCol(int, T[])
 
@@ -189,7 +190,7 @@ public class MatrixV0<T> implements Matrix<T> {
    * @throws IndexOutOfBoundsException
    *   If the column is negative or greater than or equal to the width.
    */
-  public void deleteCol(int row) {
+  public void deleteCol(int col) {
     // STUB
   } // deleteCol(int)
 
@@ -207,7 +208,7 @@ public class MatrixV0<T> implements Matrix<T> {
    * @param val
    *   The value to store.
    *
-   * @throw IndexOutOfBoundsException 
+   * @throw IndexOutOfBoundsException
    *   If the rows or columns are inappropriate.
    */
   public void fillRegion(int startRow, int startCol, int endRow, int endCol,
@@ -233,7 +234,7 @@ public class MatrixV0<T> implements Matrix<T> {
    * @param val
    *   The value to store.
    *
-   * @throw IndexOutOfBoundsException 
+   * @throw IndexOutOfBoundsException
    *   If the rows or columns are inappropriate.
    */
   public void fillLine(int startRow, int startCol, int deltaRow, int deltaCol,
@@ -255,10 +256,36 @@ public class MatrixV0<T> implements Matrix<T> {
   /**
    * Determine if this object is equal to another object.
    *
+   * @param other
+   *   The object to compare.
+   *
    * @return true if the other object is a matrix with the same width,
    * height, and equal elements; false otherwise.
    */
   public boolean equals(Object other) {
     return this == other;       // STUB
   } // equals(Object)
+
+  /**
+   * Compute a hash code for this matrix. Included because any object
+   * that implements `equals` is expected to implement `hashCode` and
+   * ensure that the hash codes for two equal objects are the same.
+   *
+   * @return the hash code.
+   */
+  public int hashCode() {
+    int multiplier = 7;
+    int code = this.width() + multiplier * this.height();
+    for (int row = 0; row < this.height(); row++) {
+      for (int col = 0; col < this.width(); col++) {
+        T val = this.get(row, col);
+        if (val != null) {
+          // It's okay if the following computation overflows, since
+          // it will overflow uniformly.
+          code = code * multiplier + val.hashCode();
+        } // if
+      } // for col
+    } // for row
+    return code;
+  } // hashCode()
 } // class MatrixV0

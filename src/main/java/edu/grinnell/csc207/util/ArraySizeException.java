@@ -20,6 +20,9 @@ public class ArraySizeException extends Exception {
 
   /**
    * Build a new exception with a particular message.
+   *
+   * @param message
+   *   The accompanying message.
    */
   public ArraySizeException(String message) {
     super(message);

@@ -6,6 +6,9 @@ import java.io.PrintWriter;
  * Two-dimensional matrices.
  *
  * @author Samuel A. Rebelsky
+ *
+ * @param <T>
+ *   The type of value stored in the matrix.
  */
 public interface Matrix<T> extends Cloneable {
   // +----------------+----------------------------------------------
@@ -19,6 +22,9 @@ public interface Matrix<T> extends Cloneable {
    *
    * @param obj
    *   The object to convert to a string.
+   *
+   * @return
+   *   The corresponding string.
    */
   static String toString(Object obj) {
     if (null == obj) {
@@ -69,6 +75,8 @@ public interface Matrix<T> extends Cloneable {
   /**
    * Print a matrix.
    *
+   * @param <T>
+   *   The type of values stored in the matrix.
    * @param pen
    *   The PrintWriter to use for printing.
    * @param matrix
@@ -183,7 +191,7 @@ public interface Matrix<T> extends Cloneable {
    * @throws IndexOutOfBoundsException
    *   If the column is negative or greater than the width.
    */
-  public void insertCol(int row);
+  public void insertCol(int col);
 
   /**
    * Insert a column filled with the specified values.
@@ -198,7 +206,7 @@ public interface Matrix<T> extends Cloneable {
    * @throws ArraySizeException
    *   If the size of vals is not the same as the height of the matrix.
    */
-  public void insertCol(int row, T[] vals) throws ArraySizeException;
+  public void insertCol(int col, T[] vals) throws ArraySizeException;
 
   /**
    * Delete a row.
@@ -220,7 +228,7 @@ public interface Matrix<T> extends Cloneable {
    * @throws IndexOutOfBoundsException
    *   If the column is negative or greater than or equal to the width.
    */
-  public void deleteCol(int row);
+  public void deleteCol(int col);
 
   /**
    * Fill a rectangular region of the matrix.
@@ -236,7 +244,7 @@ public interface Matrix<T> extends Cloneable {
    * @param val
    *   The value to store.
    *
-   * @throw IndexOutOfBoundsException 
+   * @throw IndexOutOfBoundsException
    *   If the rows or columns are inappropriate.
    */
   public void fillRegion(int startRow, int startCol, int endRow, int endCol,
@@ -260,7 +268,7 @@ public interface Matrix<T> extends Cloneable {
    * @param val
    *   The value to store.
    *
-   * @throw IndexOutOfBoundsException 
+   * @throw IndexOutOfBoundsException
    *   If the rows or columns are inappropriate.
    */
   public void fillLine(int startRow, int startCol, int deltaRow, int deltaCol,
@@ -277,6 +285,9 @@ public interface Matrix<T> extends Cloneable {
 
   /**
    * Determine if this object is equal to another object.
+   *
+   * @param other
+   *   The object to which we compare ourselves.
    *
    * @return true if the other object is a matrix with the same width,
    * height, and equal elements; false otherwise.

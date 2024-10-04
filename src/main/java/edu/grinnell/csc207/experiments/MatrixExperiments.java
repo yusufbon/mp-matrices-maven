@@ -43,6 +43,9 @@ public class MatrixExperiments {
 
   /**
    * Run the sample from the assignment.
+   *
+   * @param pen
+   *   The pen used to print out the results.
    */
   static void assignmentSample(PrintWriter pen) {
     Matrix<String> sample = new MatrixV0<String>(5, 6, "O");

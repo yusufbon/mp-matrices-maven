@@ -16,6 +16,8 @@ public class IOUtils {
   /**
    * Determine if an array contains a particular value.
    *
+   * @param <T>
+   *   The type of values in the array.
    * @param vals
    *   The array to search.
    * @param val
@@ -37,7 +39,7 @@ public class IOUtils {
   // | Provided methods |
   // +------------------+
 
-  /** 
+  /**
    * Repeatedly prompt for a command until one is returned.
    *
    * @param pen

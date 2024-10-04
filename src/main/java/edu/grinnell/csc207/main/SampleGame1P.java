@@ -78,6 +78,8 @@ public class SampleGame1P {
    *   The height of the board.
    * @param game
    *   The game number.
+   *
+   * @return the newly created board
    */
   static Matrix<String> setupBoard(int width, int height, int game) {
     Random setup = new Random(game);
@@ -121,17 +123,17 @@ public class SampleGame1P {
     // Process the command line
 
     printInstructions(pen);
-    
+
     // Set up the board
     Matrix<String> board = setupBoard(width, height, game);
 
     // Run the game
     pen.println("Game number " + game);
     pen.println();
-    
+
     String[] commands = new String[] {"RR", "RC", "IR", "IC", "DONE"};
     String command = "";
-    do { 
+    do {
       Matrix.print(pen, board);
       command = IOUtils.readCommand(pen, eyes, "Action: ", commands);
       switch (command) {
@@ -142,6 +144,9 @@ public class SampleGame1P {
         case "IR":
           break;
         case "IC":
+          break;
+        default:
+          pen.printf("Unexpected command: '%s'. Please try again.\n", command);
           break;
       } // switch
     } while (!"DONE".equals(command));
