@@ -13,6 +13,60 @@ public interface Matrix<T> extends Cloneable {
   // +----------------+
 
   /**
+   * Convert an object to a string. Intended as an alternate to
+   * obj.toString() because obj.toString() doesn't work if obj
+   * is null.
+   *
+   * @param obj
+   *   The object to convert to a string.
+   */
+  static String toString(Object obj) {
+    if (null == obj) {
+      return "/";
+    } else {
+      return obj.toString();
+    } // if/else
+  } // toString(Object)
+
+  /**
+   * Print the row separator in a matrix.
+   *
+   * @param pen
+   *   What we use for printing.
+   * @param cellWidth
+   *   The width of a cell.
+   * @param width
+   *   The width of the matrix.
+   */
+  static void printRowSeparator(PrintWriter pen, int cellWidth, int width) {
+    for (int i = 0; i < width; i++) {
+      pen.print("+" + "-".repeat(cellWidth));
+    } // for
+    pen.println("+");
+  } // printRowSeparator(PrintWriter, int, int)
+
+  /**
+   * Print a string centered in a cellWidth box.
+   *
+   * @param pen
+   *   What we use for printing.
+   * @param str
+   *   The string to print.
+   * @param cellWidth
+   *   The width of the box.
+   */
+  static void printCell(PrintWriter pen, String str, int cellWidth) {
+    int len = str.length();
+    if (len > cellWidth) {
+      pen.println(str.substring(0, cellWidth));
+    } else {
+      int left = (cellWidth - len) / 2;
+      int right = cellWidth - left - len;
+      pen.print(" ".repeat(left) + str + " ".repeat(right));
+    } // if/else
+  } // printCell
+
+  /**
    * Print a matrix.
    *
    * @param pen
@@ -20,8 +74,30 @@ public interface Matrix<T> extends Cloneable {
    * @param matrix
    *   The matrix to print.
    */
-  public static void print(PrintWriter pen, Matrix matrix) {
-    pen.println("M");
+  public static <T> void print(PrintWriter pen, Matrix<T> matrix) {
+    int width = matrix.width();
+    int height = matrix.height();
+
+    // Find the maximum width of cells.
+    int cellWidth = 0;
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        T val = matrix.get(row, col);
+        int valWidth = toString(val).length();
+        cellWidth = Math.max(cellWidth, valWidth);
+      } // for col
+    } // for row
+
+    // Print everything out
+    for (int row = 0; row < height; row++) {
+      printRowSeparator(pen, cellWidth, width);
+      for (int col = 0; col < width; col++) {
+        pen.print("|");
+        printCell(pen, toString(matrix.get(row, col)), cellWidth);
+      } // for col
+      pen.println("|");
+    } // for row
+    printRowSeparator(pen, cellWidth, width);
   } // print(PrintWriter, Matrix)
 
   // +--------------+------------------------------------------------
